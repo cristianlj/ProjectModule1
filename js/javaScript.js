@@ -133,16 +133,17 @@ divFloor5.appendChild(divFloor5Window4)
 divFloor5Window4.setAttribute('class', 'windowFloor');
 divFloor5Window4.setAttribute('id', 'divFloor5Window4');
 
+let button = document.createElement('button');
+button.innerText = "Start";
+divBuilder.appendChild(button);
+button.onclick = selectWindowFire;
 
 
 let footer = document.createElement('footer');
 let p = document.createElement('p');
 body[0].appendChild(footer);
 footer.appendChild(p);
-let button = document.createElement('button');
-button.innerText = "Start";
-p.appendChild(button);
-button.onclick = selectWindowFire;
+
 
 
 
@@ -151,116 +152,34 @@ button.onclick = selectWindowFire;
 function selectWindowFire() {
     let windowsArray = document.querySelectorAll('.windowFloor');
     var randElement = windowsArray[Math.floor(Math.random() * windowsArray.length)];
-    randElement.classList.toggle('hidden');
-    randElement.addEventListener("mouseenter", function (event) {
+    //  var randElement = windowsArray[1];
+
+    randElement.classList.toggle('onFire');
+
+    randElement.onmouseover = function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
         event.target.style.backgroundColor = "purple";
         setTimeout(function () {
-            event.target.style.backgroundColor = "greenyellow";
+            event.target.removeAttribute('style');
+            change();
+            randElement.classList.toggle('onFire');
+            randElement.onmouseover = () => false;
         }, 1000);
-    }, false);
-    randElement.addEventListener("mouseover", function (event) {
-        event.target.style.backgroundColor = "greenyellow";
-        setTimeout(function () {
-            event.target.style.backgroundColor = "";
-        }, 0);
-    }, false);
-
+    };
 }
 
 
-
-// let windows = document.querySelectorAll('.windowFloor');
-
-// let test = document.getElementById('divFloor5Window4');
-// test.addEventListener("mouseenter", function (event) {
-//     event.target.style.backgroundColor = "purple";
-//     setTimeout(function () {
-//         event.target.style.backgroundColor = "";
-//     }, 1000);
-// }, false);
-
-// test.addEventListener("mouseover", function (event) {
-//     event.target.style.backgroundColor = "orange";
-//     setTimeout(function () {
-//         event.target.style.backgroundColor = "";
-//     }, 2000);
-// }, false);
-
-
+function change() {
+    document.body.style.cursor = (document.body.style.cursor == "help") ? "url('../img/torneira.png'), crosshair" : "help";
+}
 
 
 window.onload = function () {
     //Criar as divs
     // selectWindowFire();
 };
-
-
-
-// // //Criação do html
-//  let body = document.getElementsByTagName('body');
-
-// // //create header
-//  let header = document.createElement('HEADER');
-
-//  body[0].appendChild(header);
-
-// // // create picture element 
-//  let picture = document.createElement('picture');
-//  let img = document.createElement("IMG");
-// // //console.log(img);
-
-//  img.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5_DI_DVtX_PimksPNFR4o5M5A5-c5XpXt1FR5GP-7MxpKtXceIg';
-//  picture.appendChild(img);
-
-// let nav = document.createElement('NAV');
-// //
-// header.appendChild(picture);
-// header.appendChild(nav);
-
-// let ul = document.createElement('ul');
-// let li1 = document.createElement('li');
-// let li2 = document.createElement('li');
-// let li3 = document.createElement('li');
-
-// nav.appendChild(ul);
-// ul.appendChild(li1);
-// ul.appendChild(li2);
-// ul.appendChild(li3);
-
-// let lis = document.querySelectorAll('li');
-
-// lis[0].innerText = "Item 1";
-// lis[1].innerText = "Item 2";
-// lis[2].innerText = "Item 3";
-
-
-
-
-// // section
-
-// let section1 = document.createElement('section');
-// let h1 = document.createElement('h1');
-// body[0].appendChild(section1);
-// section1.appendChild(h1);
-
-
-
-// let section2 = document.createElement('section');
-
-// let div1 = document.createElement('div');
-// let div2 = document.createElement('div');
-// let div3 = document.createElement('div');
-
-// body[0].appendChild(section2);
-// section2.appendChild(div1);
-// section2.appendChild(div2);
-// section2.appendChild(div3);
-
-// div1.innerText = 'Div Card';
-// div2.innerText = 'Div Card';
-// div3.innerText = 'Div Card';
-
-// section2.setAttribute('class', 'cards');
 
 
 

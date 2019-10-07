@@ -144,9 +144,7 @@ let p = document.createElement('p');
 body[0].appendChild(footer);
 footer.appendChild(p);
 
-
-
-
+let count = 0;
 
 // Random para escolher a janela, chamar função passando qual janela
 function selectWindowFire() {
@@ -154,31 +152,45 @@ function selectWindowFire() {
     var randElement = windowsArray[Math.floor(Math.random() * windowsArray.length)];
     //  var randElement = windowsArray[1];
 
-    randElement.classList.toggle('onFire');
 
-    randElement.onmouseover = function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        event.target.style.backgroundColor = "purple";
-        setTimeout(function () {
-            event.target.removeAttribute('style');
-            change();
-            randElement.classList.toggle('onFire');
-            randElement.onmouseover = () => false;
-        }, 1000);
-    };
-}
+    if (randElement.className == 'windowFloor') {
+        randElement.classList.toggle('onFire');
 
 
-function change() {
-    document.body.style.cursor = (document.body.style.cursor == "help") ? "url('../img/torneira.png'), crosshair" : "help";
+        count = count + 1;
+        console.log(count);
+
+
+        randElement.onmouseover = function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            event.target.style.backgroundColor = "purple";
+            setTimeout(function () {
+                count = count - 1;
+                console.log(count);
+                event.target.removeAttribute('style');
+                randElement.classList.toggle('onFire');
+                randElement.onmouseover = () => false;
+            }, 500);
+        };
+    }
 }
 
 
 window.onload = function () {
     //Criar as divs
     // selectWindowFire();
+    this.setInterval(function () {
+        if (count < 10) {
+            selectWindowFire();
+        }
+        else {
+            return alert('Game Over');
+        }
+    }, 500);
+
+
 };
 
 

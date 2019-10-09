@@ -1,6 +1,16 @@
 //Criar divs aqui no JS
 
 
+
+// objetos janelas com vários atributos
+let windowF = new Object();
+window.id = id;
+window.status = status;
+window.color = color;
+
+
+
+
 let body = document.getElementsByTagName('body');
 let divContainer = document.createElement('DIV');
 let header = document.createElement('HEADER');
@@ -13,6 +23,10 @@ divContainer.setAttribute('class', 'container')
 let divBuilder = document.createElement('div');
 divContainer.appendChild(divBuilder);
 divBuilder.setAttribute('class', 'builder');
+
+let divInfo = document.createElement('div');
+divContainer.appendChild(divInfo);
+divInfo.setAttribute('class', 'divInfo');
 
 
 //Criação do 1 andar
@@ -145,6 +159,7 @@ body[0].appendChild(footer);
 footer.appendChild(p);
 
 let count = 0;
+let score = 0;
 
 // Random para escolher a janela, chamar função passando qual janela
 function selectWindowFire() {
@@ -156,10 +171,11 @@ function selectWindowFire() {
     if (randElement.className == 'windowFloor') {
         randElement.classList.toggle('onFire');
 
+        if (count >= 0) {
+            count = count + 1;
+            //   console.log(count);
 
-        count = count + 1;
-        console.log(count);
-
+        }
 
         randElement.onmouseover = function (event) {
             event.preventDefault();
@@ -167,28 +183,48 @@ function selectWindowFire() {
 
             event.target.style.backgroundColor = "purple";
             setTimeout(function () {
-                count = count - 1;
-                console.log(count);
+                //     if (count > 0) {
+                //        // count = count - 1;
+                //         // console.log(count);
+                addScore();
+                //     }
                 event.target.removeAttribute('style');
                 randElement.classList.toggle('onFire');
                 randElement.onmouseover = () => false;
-            }, 500);
+            }, 1000);
         };
     }
 }
+
+function addScore() {
+
+    if (score < 10) {
+        score = score + 1;
+    }
+    else if (score < 5) {
+        console.log('Você perdeu, atingiu ' + score + ' pontos.');
+    }
+    else {
+        console.log('Você venceu, atingiu ' + score + ' pontos.');
+    }
+}
+
+
 
 
 window.onload = function () {
     //Criar as divs
     // selectWindowFire();
+
     this.setInterval(function () {
-        if (count < 10) {
+        if (count <= 10) {
             selectWindowFire();
         }
         else {
-            return alert('Game Over');
+            //      console.log('Game Over');
+            return;
         }
-    }, 500);
+    }, 1000);
 
 
 };

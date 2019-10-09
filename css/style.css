@@ -9,10 +9,16 @@
 }
 
 .builder {
+    display: flexbox;
+ 
+}
+
+.divInfo {
     border: 1px solid green;
     width: 500px;
     height: 420px;
 }
+
 
 .floor5 {
     border: 1px solid red;

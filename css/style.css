@@ -10,15 +10,21 @@
 
 .builder {
     display: flexbox;
- 
+}
+
+.divInfoMain {
+    border: 1px solid green;
+    width: 150px;
+    height: 400px;
 }
 
 .divInfo {
+    display: flexbox;
+    flex-direction: column;
     border: 1px solid green;
-    width: 500px;
-    height: 420px;
+    width: 150px;
+    height: 100px;
 }
-
 
 .floor5 {
     border: 1px solid red;
@@ -58,7 +64,10 @@
     background-color: greenyellow;
 }
 
-
 .onFire {
     background-color: red;
+}
+
+.onFire:hover {
+    background-color: purple;
 }

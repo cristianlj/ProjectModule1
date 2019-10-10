@@ -3,12 +3,12 @@
 
 
 // objetos janelas com vários atributos
-let windowF = new Object();
-window.id = id;
-window.status = status;
-window.color = color;
+// let windowF = new Object();
+// window.id = id;
+// window.status = status;
+// window.color = color;
 
-
+let intervalIds = [];
 
 
 let body = document.getElementsByTagName('body');
@@ -24,9 +24,28 @@ let divBuilder = document.createElement('div');
 divContainer.appendChild(divBuilder);
 divBuilder.setAttribute('class', 'builder');
 
+//Local onde ficam os dados do jogo
+let divInfoMain = document.createElement('div');
+divContainer.appendChild(divInfoMain);
+divInfoMain.setAttribute('class', 'divInfoMain');
+
 let divInfo = document.createElement('div');
-divContainer.appendChild(divInfo);
-divInfo.setAttribute('class', 'divInfo');
+divInfoMain.appendChild(divInfo);
+divInfo.setAttribute('class', 'divInfo floor1');
+
+let lblScore = document.createElement('label');
+divInfo.appendChild(lblScore);
+lblScore.innerText = "Score: 0"
+
+
+
+let lblTimeGame = document.createElement('label');
+divInfo.appendChild(lblTimeGame);
+lblTimeGame.innerText = "Time Game: 0"
+
+
+
+
 
 
 //Criação do 1 andar
@@ -147,10 +166,56 @@ divFloor5.appendChild(divFloor5Window4)
 divFloor5Window4.setAttribute('class', 'windowFloor');
 divFloor5Window4.setAttribute('id', 'divFloor5Window4');
 
+// Random para escolher a janela, chamar função passando qual janela
+const selectWindowFire = () => {
+    let windowsArray = document.querySelectorAll('.windowFloor');
+    var randElement = windowsArray[Math.floor(Math.random() * windowsArray.length)];
+    //  var randElement = windowsArray[1];
+    if (randElement.classList.contains('windowFloor') && !randElement.classList.contains('onFire')) {
+        randElement.classList.add('onFire');
+
+        count = count + 1;
+        let timer;
+        let intervalId;
+
+        randElement.onmouseover = (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            timer = 0;
+            intervalId = setInterval(() => {
+                console.log(timer, event.target)
+                timer++;
+                if (timer > 30) {
+                    clearInterval(intervalId)
+                }
+            }, 100);
+            intervalIds.push(intervalId);
+        };
+
+        randElement.onmouseout = (event) => {
+            event.stopPropagation();
+            event.preventDefault();
+            if (timer > 20) {
+                addScore();
+                event.target.classList.remove('onFire');
+                event.target.onmouseover = null;
+                event.target.onmouseout = null;
+
+                clearInterval(intervalId)
+            }
+            else {
+                console.log('count menor que 2s ', timer)
+            };
+        }
+    }
+}
+
+
 let button = document.createElement('button');
 button.innerText = "Start";
-divBuilder.appendChild(button);
-button.onclick = selectWindowFire;
+divInfoMain.appendChild(button);
+button.setAttribute('class', 'button')
+button.onclick = sortWindow;
 
 
 let footer = document.createElement('footer');
@@ -161,45 +226,12 @@ footer.appendChild(p);
 let count = 0;
 let score = 0;
 
-// Random para escolher a janela, chamar função passando qual janela
-function selectWindowFire() {
-    let windowsArray = document.querySelectorAll('.windowFloor');
-    var randElement = windowsArray[Math.floor(Math.random() * windowsArray.length)];
-    //  var randElement = windowsArray[1];
-
-
-    if (randElement.className == 'windowFloor') {
-        randElement.classList.toggle('onFire');
-
-        if (count >= 0) {
-            count = count + 1;
-            //   console.log(count);
-
-        }
-
-        randElement.onmouseover = function (event) {
-            event.preventDefault();
-            event.stopPropagation();
-
-            event.target.style.backgroundColor = "purple";
-            setTimeout(function () {
-                //     if (count > 0) {
-                //        // count = count - 1;
-                //         // console.log(count);
-                addScore();
-                //     }
-                event.target.removeAttribute('style');
-                randElement.classList.toggle('onFire');
-                randElement.onmouseover = () => false;
-            }, 1000);
-        };
-    }
-}
 
 function addScore() {
 
     if (score < 10) {
         score = score + 1;
+        lblScore.innerText = "Score: " + score
     }
     else if (score < 5) {
         console.log('Você perdeu, atingiu ' + score + ' pontos.');
@@ -212,22 +244,36 @@ function addScore() {
 
 
 
-window.onload = function () {
-    //Criar as divs
-    // selectWindowFire();
+//Criar as divs
+// selectWindowFire();
+function sortWindow() {
+    if (count <= 10) {
+        selectWindowFire();
+        lblTimeGame.innerText = "Time: " + (count - 1);
+        setTimeout(sortWindow, 1000);
+    }
+    else {
+        // finalzacao do jogo.
+        intervalIds.forEach(function (intervalId) {
+            clearInterval(intervalId);
+            console.log(intervalIds)
+            console.log('matou o interval', intervalId)
+        });
+        let windowsArray = document.querySelectorAll('.windowFloor');
+        windowsArray.forEach(function (item) {
+            item.onmouseover = null;
+            item.onmouseout = null;
+            item.classList.remove('onFire');
+        })
+        return;
+    }
 
-    this.setInterval(function () {
-        if (count <= 10) {
-            selectWindowFire();
-        }
-        else {
-            //      console.log('Game Over');
-            return;
-        }
-    }, 1000);
+}
+
+sortWindow();
 
 
-};
+
 
 
 

@@ -41,9 +41,10 @@ lblScore.innerText = "Score: 0"
 
 let lblTimeGame = document.createElement('label');
 divInfo.appendChild(lblTimeGame);
-lblTimeGame.innerText = "Time Game: 0"
+lblTimeGame.innerText = "Time Game:"
 
-
+let timeGame = document.createElement('label');
+divInfo.appendChild(timeGame);
 
 
 
@@ -170,7 +171,6 @@ divFloor5Window4.setAttribute('id', 'divFloor5Window4');
 const selectWindowFire = () => {
     let windowsArray = document.querySelectorAll('.windowFloor');
     var randElement = windowsArray[Math.floor(Math.random() * windowsArray.length)];
-    //  var randElement = windowsArray[1];
     if (randElement.classList.contains('windowFloor') && !randElement.classList.contains('onFire')) {
         randElement.classList.add('onFire');
 
@@ -185,7 +185,7 @@ const selectWindowFire = () => {
             intervalId = setInterval(() => {
                 console.log(timer, event.target)
                 timer++;
-                if (timer > 30) {
+                if (timer > 5) {
                     clearInterval(intervalId)
                 }
             }, 100);
@@ -195,7 +195,7 @@ const selectWindowFire = () => {
         randElement.onmouseout = (event) => {
             event.stopPropagation();
             event.preventDefault();
-            if (timer > 20) {
+            if (timer > 5) {
                 addScore();
                 event.target.classList.remove('onFire');
                 event.target.onmouseover = null;
@@ -211,11 +211,18 @@ const selectWindowFire = () => {
 }
 
 
+let btnCount = document.createElement('button');
+divInfoMain.appendChild(btnCount);
+btnCount.setAttribute('id', 'btn');
+//btnCount.innerText = "Tempo 20 segundos!";
+
 let button = document.createElement('button');
 button.innerText = "Start";
 divInfoMain.appendChild(button);
 button.setAttribute('class', 'button')
-button.onclick = sortWindow;
+// button.onclick = sortWindow;
+button.onclick = timerGame;
+
 
 
 let footer = document.createElement('footer');
@@ -228,28 +235,20 @@ let score = 0;
 
 
 function addScore() {
-
     if (score < 10) {
         score = score + 1;
         lblScore.innerText = "Score: " + score
     }
-    else if (score < 5) {
-        console.log('Você perdeu, atingiu ' + score + ' pontos.');
-    }
-    else {
-        console.log('Você venceu, atingiu ' + score + ' pontos.');
-    }
 }
-
-
-
 
 //Criar as divs
 // selectWindowFire();
+// && score <= 5
+
 function sortWindow() {
     if (count <= 10) {
         selectWindowFire();
-        lblTimeGame.innerText = "Time: " + (count - 1);
+        //      lblTimeGame.innerText = "Time: " + (count - 1);
         setTimeout(sortWindow, 1000);
     }
     else {
@@ -263,14 +262,36 @@ function sortWindow() {
         windowsArray.forEach(function (item) {
             item.onmouseover = null;
             item.onmouseout = null;
-            item.classList.remove('onFire');
+            // item.classList.remove('onFire');
+            item.classList.add('onFire');
         })
         return;
     }
-
 }
 
-sortWindow();
+//let secs = 20;
+
+function timerGame() {
+    countDown(20);
+    sortWindow();
+}
+
+function countDown(secs) {
+    var btn = document.getElementById('btn');
+    btn.innerText = "Aguarde " + secs + " segundos";
+    // <!--texto que aparecerá enquanto o tempo descer, não altere o"+secs+"-->
+    if (secs < 1) {
+        clearTimeout(timer);
+        btn.disabled = false;
+        btn.value = 'OK clique aqui';
+    }
+    secs--;
+    var timer = setTimeout('countDown(' + secs + ')', 1000);
+}
+
+
+
+//sortWindow();
 
 
 

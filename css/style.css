@@ -10,6 +10,8 @@
 
 .builder {
     display: flexbox;
+    width: 60vw;
+    height: 90vh;
 }
 
 .divInfoMain {

@@ -23,6 +23,9 @@ divContainer.setAttribute('class', 'container')
 let divBuilder = document.createElement('div');
 divContainer.appendChild(divBuilder);
 divBuilder.setAttribute('class', 'builder');
+  
+
+
 
 //Local onde ficam os dados do jogo
 let divInfoMain = document.createElement('div');
@@ -269,10 +272,8 @@ function sortWindow() {
     }
 }
 
-//let secs = 20;
-
 function timerGame() {
-    countDown(20);
+    countDown(10);
     sortWindow();
 }
 
@@ -283,7 +284,8 @@ function countDown(secs) {
     if (secs < 1) {
         clearTimeout(timer);
         btn.disabled = false;
-        btn.value = 'OK clique aqui';
+        btn.innerText = 'OK clique aqui';
+       return;
     }
     secs--;
     var timer = setTimeout('countDown(' + secs + ')', 1000);

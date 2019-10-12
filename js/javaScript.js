@@ -10,7 +10,6 @@
 
 let intervalIds = [];
 
-
 let body = document.getElementsByTagName('body');
 let divContainer = document.createElement('DIV');
 let header = document.createElement('HEADER');
@@ -23,7 +22,10 @@ divContainer.setAttribute('class', 'container')
 let divBuilder = document.createElement('div');
 divContainer.appendChild(divBuilder);
 divBuilder.setAttribute('class', 'builder');
-  
+
+
+let divGameOver = document.createElement('div');
+divContainer.appendChild(divGameOver);
 
 
 
@@ -38,18 +40,15 @@ divInfo.setAttribute('class', 'divInfo floor1');
 
 let lblScore = document.createElement('label');
 divInfo.appendChild(lblScore);
+// lblScore.style.fontSize(30);
 lblScore.innerText = "Score: 0"
 
 
 
 let lblTimeGame = document.createElement('label');
 divInfo.appendChild(lblTimeGame);
-lblTimeGame.innerText = "Time Game:"
-
-let timeGame = document.createElement('label');
-divInfo.appendChild(timeGame);
-
-
+// lblTimeGame.style.fontSize(30);
+lblTimeGame.innerText = "Time Game: 20"
 
 
 //Criação do 1 andar
@@ -186,9 +185,9 @@ const selectWindowFire = () => {
             event.stopPropagation();
             timer = 0;
             intervalId = setInterval(() => {
-                console.log(timer, event.target)
+                //  console.log(timer, event.target)
                 timer++;
-                if (timer > 5) {
+                if (timer > 10) {
                     clearInterval(intervalId)
                 }
             }, 100);
@@ -198,7 +197,7 @@ const selectWindowFire = () => {
         randElement.onmouseout = (event) => {
             event.stopPropagation();
             event.preventDefault();
-            if (timer > 5) {
+            if (timer > 10) {
                 addScore();
                 event.target.classList.remove('onFire');
                 event.target.onmouseover = null;
@@ -206,18 +205,13 @@ const selectWindowFire = () => {
 
                 clearInterval(intervalId)
             }
-            else {
-                console.log('count menor que 2s ', timer)
-            };
+            // else {
+            //     console.log('count menor que 2s ', timer)
+            // };
         }
     }
 }
 
-
-let btnCount = document.createElement('button');
-divInfoMain.appendChild(btnCount);
-btnCount.setAttribute('id', 'btn');
-//btnCount.innerText = "Tempo 20 segundos!";
 
 let button = document.createElement('button');
 button.innerText = "Start";
@@ -227,11 +221,28 @@ button.setAttribute('class', 'button')
 button.onclick = timerGame;
 
 
+let divFinal = document.createElement('div');
+divInfoMain.appendChild(divFinal);
+
+let btnCount = document.createElement('button');
+divFinal.appendChild(btnCount);
+btnCount.setAttribute('class', 'button')
+btnCount.innerText = "";
+
+
+
+// let img = document.createElement('img')
+// img.src = '../img/start.png'
+// divInfoMain.appendChild('img');
+
+
+
 
 let footer = document.createElement('footer');
 let p = document.createElement('p');
 body[0].appendChild(footer);
 footer.appendChild(p);
+
 
 let count = 0;
 let score = 0;
@@ -249,62 +260,77 @@ function addScore() {
 // && score <= 5
 
 function sortWindow() {
-    if (count <= 10) {
+
+    if (count < 10) {
         selectWindowFire();
-        //      lblTimeGame.innerText = "Time: " + (count - 1);
-        setTimeout(sortWindow, 1000);
+        setTimeout(sortWindow, 2000);
     }
-    else {
+    else if (score < 7) {
         // finalzacao do jogo.
         intervalIds.forEach(function (intervalId) {
             clearInterval(intervalId);
-            console.log(intervalIds)
-            console.log('matou o interval', intervalId)
         });
         let windowsArray = document.querySelectorAll('.windowFloor');
         windowsArray.forEach(function (item) {
             item.onmouseover = null;
             item.onmouseout = null;
-            // item.classList.remove('onFire');
             item.classList.add('onFire');
+            button.innerText = "Play Again";
+            //alert('Você perdeu!!!');
+            btnCount.innerText = "GAME OVER";
+
         })
+        return;
+    }
+    else {
+        // finalzacao do jogo.
+        intervalIds.forEach(function (intervalId) {
+            clearInterval(intervalId);
+        });
+        let windowsArray = document.querySelectorAll('.windowFloor');
+        windowsArray.forEach(function (item) {
+            item.onmouseover = null;
+            item.onmouseout = null;
+            item.classList.remove('onFire');
+            button.innerText = "Play Again";
+        })
+        btnCount.innerText = 'You Win';
+
         return;
     }
 }
 
 function timerGame() {
-    countDown(10);
-    sortWindow();
+    if (count == 0) {
+        countDown(20);
+        sortWindow();
+    }
+    else {
+        window.location.reload();
+    }
 }
 
+
 function countDown(secs) {
-    var btn = document.getElementById('btn');
-    btn.innerText = "Aguarde " + secs + " segundos";
+
+    lblTimeGame.innerText = "Time Game: " + secs;
     // <!--texto que aparecerá enquanto o tempo descer, não altere o"+secs+"-->
     if (secs < 1) {
         clearTimeout(timer);
-        btn.disabled = false;
-        btn.innerText = 'OK clique aqui';
-       return;
+        gameOver();
+        return;
     }
     secs--;
     var timer = setTimeout('countDown(' + secs + ')', 1000);
 }
 
 
+function gameOver() {
 
-//sortWindow();
+    //   let gameOver =  document.getElementsByTagName('divGameOver');
+    divGameOver.setAttribute('class', 'divGameOver');
 
-
-
-
-
-
-
-
-
-
-
+}
 
 
 

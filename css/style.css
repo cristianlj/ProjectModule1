@@ -1,87 +1,136 @@
 .container {
     width: 100vw;
     height: 100vh;
-    background: #6C7A89;
+    /* background: #6C7A89; */
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center
+    align-items: center;
 }
 
 .builder {
-    display: flexbox;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 60vw;
-    height: 90vh;
-}
-.builder:hover{
-
+    height: 80vh;
+    background-image: url(../img/darkBackground.jpg);
 }
 
+/* 
+.divGameOver {
+    background-image: url(../img/gameOver.jpeg);
+    background-size: 700px;
+    width: 700px;
+} */
 
-
+.url {
+    cursor: url(../img/water.cur), auto;
+}
 
 .divInfoMain {
-    border: 1px solid green;
+    /* border: 1px solid green; */
     width: 150px;
     height: 400px;
+    margin-left: 10px;
 }
 
 .divInfo {
     display: flexbox;
     flex-direction: column;
-    border: 1px solid green;
+    /* border: 1px solid green; */
     width: 150px;
     height: 100px;
+    margin-left: 10px;
 }
 
 .floor5 {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display: flex;
     justify-content: space-around;
     ;
 }
 
 .floor4 {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display: flex;
     justify-content: space-around;
 }
 
 .floor3 {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display: flex;
     justify-content: space-around;
 }
 
 .floor2 {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display: flex;
     justify-content: space-around;
 }
 
 .floor1 {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display: flex;
     justify-content: space-around;
 }
 
 .windowFloor {
+    position: center;
     border: 1px solid blue;
     width: 60px;
     height: 80px;
-    background-color: greenyellow;
+    /* background-color: greenyellow; */
+    background-image: url(../img/window.png);
+    background-size: 60px;
 }
 
 .onFire {
-    background-color: red;
+    /* background-color: red; */
+    background-image: url(../img/windowFire.png);
+    background-size: 55px;
 }
 
 .onFire:hover {
-    background-color: darkblue;
-    /* cursor: url(../img/torneira.cur), default; */
-cursor: url(torneira.cur), url(http://www.example.com/bar.gif), auto;
-
+    /* background-color: darkblue; */
+    background-image: url(../img/water.jpg);
+    background-size: 75px;
+    /* cursor: url(../img/water.cur), auto; */
+    cursor: none;
 }
 
+#label {
+    font-size: 30pt;
+}
 
+.button {
+    -moz-border-radius: 25px;
+    -moz-box-shadow: #6E7849 0px 0px 10px;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -webkit-border-radius: 25px;
+    -webkit-box-shadow: #6E7849 0 0 10px;
+    -webkit-transition: all 0.5s ease;
+    background-color: #6E7849;
+    background-image: -moz-linear-gradient(90deg, #B9C788, #6E7849);
+    background-image: -ms-linear-gradient(90deg, #B9C788, #6E7849);
+    background-image: -o-linear-gradient(90deg, #B9C788, #6E7849);
+    background-image: -webkit-linear-gradient(90deg, #B9C788, #6E7849);
+    background-image: linear-gradient(90deg, #B9C788, #6E7849);
+    border-radius: 25px;
+    border: 2px solid #4a5032;
+    box-shadow: #6E7849 0px 0px 10px;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 30pt;
+    margin: auto;
+    padding: 15px;
+    text-decoration: none;
+    text-shadow: #000000 5px 5px 15px;
+    transition: all 0.5s ease;
+}
 
+.button:hover {
+    padding: 15px;
+}
